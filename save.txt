@@ -1,0 +1,9 @@
+prog:
+  cmds    { theCmds = $1; }
+;
+
+cmds:
+  stat          { theStat = $1; }
+| dec PV cmds   { theDec = $1; theCmds = $3; }
+| stat PV cmds  { theStat = $1; theCmds = $3; }
+;

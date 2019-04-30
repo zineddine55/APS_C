@@ -22,7 +22,7 @@ typedef struct _args Args;
 
 enum _tag {ASTNum, ASTId, ASTPrim, ASTBool, ASTLog, ASTComp, ASTExpr, ASTExprs
           ASTTprim, ASTFunType, ASTType, ASTTypes, ASTArg, ASTArgs,
-          ASTConstDec};
+          ASTConstDec ASTFunDec, ASTRecFunDec};
 enum _oprim { AST_ADD, AST_SUB, AST_DIV, AST_MUL };
 enum _tprim { AST_TYPEINT, AST_TYPEBOOL };
 enum _typeTag { ASTTypeBool, ASTTypeInt  };
@@ -66,10 +66,10 @@ struct _args {
 struct _declaration {
     Tag tag;
     union{
-      struct {Expr* id, Type* type, Expr* val;} constDec;
-      struct {} funDec;
-      struct {} recFunDec;
-    }
+      struct {Expr* id; Type* type; Expr* val;} constDec;
+      struct {Expr* id; Type* type; Args* args; Expr* body;} funDec;
+      struct {Expr* id; Type* type; Args* args; Expr* body;} recFunDec;
+    } content;
 };
 
 struct _stat {
@@ -118,8 +118,7 @@ Expr* newASTPrim(Oprim op, Expr* e1, Expr* e2);
 Expr* newASTBool(int v);
 Type* newASTTypeInt();
 Type* newASTTypeBool();
-Declaration* newASTVarDeclaration(DeclarationTag t, char* v, Type* type);
-Declaration* newASTConstDeclaration(DeclarationTag t, char* v, Type* type, Expr* expr);
+Declaration* newASTConstDeclaration(Expr* v, Type* type, Expr* expr);
 Expr* newASTLogNOT(SymLog s, Expr* e);
 Expr* newASTLog(SymLog s, Expr* e1, Expr* e2);
 Expr* newASTComp(SymComp s, Expr* e1, Expr* e2 );
@@ -139,6 +138,9 @@ Types* newASTTypes(Type* type, Types* types);
 Arg* newASTArgDec(char* id, Type* type);
 Args* newASTArg(Arg* arg);
 Args* newASTArgs(Arg* arg, Args* args);
+Declaration* newASTFunDec(char* v, Type* type,Args* args, Expr* expr);
+Declaration* newASTRecFunDec(char* v, Type* type,Args* args, Expr* expr);
+
 
 #define tagOf(r) r->tag
 #define getNum(r) r->content.num

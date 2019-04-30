@@ -7,3 +7,10 @@ cmds:
 | dec PV cmds   { theDec = $1; theCmds = $3; }
 | stat PV cmds  { theStat = $1; theCmds = $3; }
 ;
+
+
+stat:
+  SET IDENT exp           { $$ = newASTAffectation(AST_SET,$2,$3); }
+| IF exp prog prog        { $$ = newASTAlternative(AST_IF,$2,$3,$4); }
+| WHILE exp prog          { $$ = newASTLoop(AST_WHILE,$2,$3);}
+;

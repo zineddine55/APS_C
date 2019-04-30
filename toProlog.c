@@ -33,7 +33,7 @@ void printSymStat(SymStat s) {
 }
 
 void printNum(int n) {
-  printf("%d",n);
+  printf("num(%d)",n);
 }
 
 void printId(char* x) {
@@ -162,23 +162,44 @@ void printExprs(Exprs* e) {
 
 void printDeclaration(Declaration *d) {
   switch (tagOf(d)) {
-    case ASTVarDec: {
-      printf("VarDeclaration(");
-      printId(getId(d->id));
-      printf(",");
-      printType(d->type);
-      printf(")");
-      break;
-    }
     case ASTConstDec: {
-      printId(getId(d->id));
+      printf("ConstDec");
+      printf("(");
+      printId(getId(d->content.constDec.id));
       printf(",");
-      printType(d->type);
+      printType(d->content.constDec.type);
       printf(",");
-      printExpr(d->expr);
+      printExpr(d->content.constDec.val);
       printf(")");
       break;
     }
+    case ASTFunDec: {
+      printf("FunDec");
+      printf("(");
+      printId(getId(d->content.funDec.id));
+      printf(",");
+      printType(d->content.funDec.type);
+      printf(",");
+      printArgs(d->content.funDec.args);
+      printf(",");
+      printExprs(d->content.funDec.body);
+      printf(")");
+      break;
+    }
+    case ASTRecFunDec: {
+      printf("RecFunDec");
+      printf("(");
+      printId(getId(d->content.recFunDec.id));
+      printf(",");
+      printType(d->content.recFunDec.type);
+      printf(",");
+      printArgs(d->content.recFunDec.args);
+      printf(",");
+      printExprs(d->content.recFunDec.body);
+      printf(")");
+      break;
+    }
+
   }
 }
 

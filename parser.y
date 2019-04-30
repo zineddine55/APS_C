@@ -35,6 +35,7 @@ Prog* theProg;
 %token  PV
 %token  LCR RCR
 %token  TR SUP ST DP
+%token ECHO
 
 %left PLUS MINUS
 %left TIMES DIV
@@ -85,15 +86,13 @@ cmds:
 ;
 
 dec:
-  CONST IDENT type exp                { $$ = newASTConstDeclaration(ASTConstDec,$2,$3,$4); }
+  CONST IDENT type exp                { $$ = newASTConstDeclaration($2,$3,$4); }
 | FUN IDENT type LCR args RCR exp     { $$ = newASTFunDec($2,$3,$5,$7); }
 | FUN REC IDENT type LCR args RCR exp { $$ = newASTRecFunDec($2,$3,$5,$7); }
 ;
 
 stat:
-  SET IDENT exp           { $$ = newASTAffectation(AST_SET,$2,$3); }
-| IF exp prog prog        { $$ = newASTAlternative(AST_IF,$2,$3,$4); }
-| WHILE exp prog          { $$ = newASTLoop(AST_WHILE,$2,$3);}
+  ECHO exp                 { $$ = newASTEcho($2); }
 ;
 
 exp:

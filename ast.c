@@ -108,45 +108,71 @@ Types* newASTTypes(Type* type, Types* types) {
 
 /* Declarations */
 
-Declaration* newASTConstDeclaration(DeclarationTag t, char* v, Type* type, Expr* expr) {
+Declaration* newASTConstDeclaration(char* v, Type* type, Expr* expr) {
 	Declaration* dec = malloc(sizeof(*dec));
-	dec->tag = t;
-	dec->type = type;
-	dec->id = newASTId(v);
-	dec->expr = expr;
+	dec->tag = ASTConstDec;
+	dec->content.constDec.type = type;
+	dec->content.constDec.id = newASTId(v);
+	dec->content.constDec.val = expr;
 	return dec;
 }
 
+Declaration* newASTFunDec(char* v, Type* type,Args* args, Expr* expr){
+	Declaration* dec = malloc(sizeof(*dec));
+	dec->tag = ASTFunDec;
+	dec->content.funDec.id = newASTId(v);
+	dec->content.funDec.type = type;
+	dec->content.funDec.args = args;
+	dec->content.funDec.body = expr;
+	return dec
+}
+
+Declaration* newASTRecFunDec(char* v, Type* type,Args* args, Expr* expr){
+	Declaration* dec = malloc(sizeof(*dec));
+	dec->tag = ASTRecFunDec;
+	dec->content.funDec.id = newASTId(v);
+	dec->content.funDec.type = type;
+	dec->content.funDec.args = args;
+	dec->content.funDec.body = expr;
+	return dec
+}
+
 /* Statements */
+//
+// Stat* newASTAffectation(SymStat s, char* v, Expr* expr){
+// 	Stat* stat = malloc(sizeof(*stat));
+// 	stat->tag = ASTAffect;
+// 	stat->content.Affactation.s = s;
+// 	stat->content.Affactation.id = newASTId(v);
+// 	stat->content.Affactation.expr = expr;
+// 	return stat;
+// }
+//
+//
+// Stat* newASTAlternative(SymStat s, Expr* test, Prog* body, Prog* alt){
+// 	Stat* stat = malloc(sizeof(*stat));
+// 	stat->tag = ASTAlt;
+// 	stat->content.Alternative.s = s;
+// 	stat->content.Alternative.test = test;
+// 	stat->content.Alternative.body = body;
+// 	stat->content.Alternative.alt = alt;
+// 	return stat;
+// }
+//
+//
+// Stat* newASTLoop(SymStat s, Expr* test, Prog* body){
+// 	Stat* stat = malloc(sizeof(*stat));
+// 	stat->tag = ASTLoop;
+// 	stat->content.Loop.s = s;
+// 	stat->content.Loop.test = test;
+// 	stat->content.Loop.body = body;
+// 	return stat;
+// }
 
-Stat* newASTAffectation(SymStat s, char* v, Expr* expr){
-	Stat* stat = malloc(sizeof(*stat));
-	stat->tag = ASTAffect;
-	stat->content.Affactation.s = s;
-	stat->content.Affactation.id = newASTId(v);
-	stat->content.Affactation.expr = expr;
-	return stat;
-}
+Stat* newASTEcho(Expr* e) {
+	Stat* s = malloc(sizeof(*s));
 
-
-Stat* newASTAlternative(SymStat s, Expr* test, Prog* body, Prog* alt){
-	Stat* stat = malloc(sizeof(*stat));
-	stat->tag = ASTAlt;
-	stat->content.Alternative.s = s;
-	stat->content.Alternative.test = test;
-	stat->content.Alternative.body = body;
-	stat->content.Alternative.alt = alt;
-	return stat;
-}
-
-
-Stat* newASTLoop(SymStat s, Expr* test, Prog* body){
-	Stat* stat = malloc(sizeof(*stat));
-	stat->tag = ASTLoop;
-	stat->content.Loop.s = s;
-	stat->content.Loop.test = test;
-	stat->content.Loop.body = body;
-	return stat;
+	return s;
 }
 
 /* Commandes */

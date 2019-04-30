@@ -53,6 +53,7 @@ idents [a-zA-Z][a-zA-Z0-9]*
 ">"     return(SUP);
 
 "*"     return(ST);
+"echo"  return(ECHO);
 
 {nls}  { return(0); }
 

@@ -13,3 +13,4 @@ void printType(Type* t);
 void printTprim(Tprim t);
 void printArgs(Args* args);
 void printArg(Arg* arg);
+void printDeclaration(Declaration *d);

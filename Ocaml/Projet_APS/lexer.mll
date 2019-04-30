@@ -12,6 +12,11 @@ rule token = parse
     | "sub"            { MINUS }
     | "mul"            { TIMES }
     | "div"            { DIV }
+    | "true"           { TRUE }
+    | "false"          { FALSE }
+    | "if"             { IF }
     | '('              { LPAR }
     | ')'              { RPAR }
+    | '['              { LBRA }
+    | ']'              { RBRA }
     | eof              { raise Eof }

@@ -6,6 +6,8 @@ open Ast
 %token <string> IDENT
 %token PLUS MINUS TIMES DIV
 %token LPAR RPAR
+%token TRUE FALSE
+%token IF
 %token EOL
 %start line             /* the entry point */
 
@@ -23,4 +25,13 @@ open Ast
     | LPAR MINUS expr expr RPAR  { ASTPrim(Ast.Sub, $3, $4) }
     | LPAR TIMES expr expr RPAR  { ASTPrim(Ast.Mul, $3, $4) }
     | LPAR DIV expr expr RPAR    { ASTPrim(Ast.Div, $3, $4) }
+    | FALSE                      { ASTBool(false) }
+    | TRUE                       { ASTBool(true) }
+    | LPAR IF expr expr expr RPAR { ASTAlt($3, $4, $5) }
+    | LPAR expr exprs RPAR       { ASTApp($2, $3) }  
+    ;
+
+    exprs:
+      expr                       { ASTExpr($1) }
+    | expr exprs                 { ASTExprs($1, $2) }
     ;

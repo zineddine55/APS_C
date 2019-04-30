@@ -7,6 +7,9 @@ type token =
   | DIV
   | LPAR
   | RPAR
+  | TRUE
+  | FALSE
+  | IF
   | EOL
 
 val line :

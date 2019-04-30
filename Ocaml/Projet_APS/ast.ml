@@ -17,4 +17,11 @@ let op_of_string op =
 type expr =
     ASTNum of int
   | ASTId of string
+  | ASTBool of bool
   | ASTPrim of op * expr * expr
+  | ASTAlt of expr * expr * expr
+  | ASTApp of expr * exprs
+
+type exprs = 
+    ASTExpr of expr 
+  | ASTExprs of expr * exprs 

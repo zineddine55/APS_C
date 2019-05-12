@@ -6,17 +6,21 @@ open Ast
 %token <string> IDENT
 %token PLUS MINUS TIMES DIV
 %token LPAR RPAR
+%token LBRA RBRA
 %token TRUE FALSE
 %token IF
 %token EOL
 %start line             /* the entry point */
 
-%type <Ast.expr> line
+%type <Ast.prog> line
 
 %%
 
     line:
-    expr EOL                     { $1 }
+    prog EOL                     { $1 }
+    ;
+    prog:
+    | LBRA exprs RBRA            { ASTProg($2) }
     ;
     expr:
       NUM                        { ASTNum($1) }

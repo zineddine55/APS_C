@@ -13,15 +13,17 @@ let op_of_string op =
         | "mul" -> Mul
         | "sub" -> Sub
         | "div" -> Div
+type prog = 
+  | ASTProg of exprs
 
-type expr =
+and exprs = 
+    ASTExpr of expr 
+  | ASTExprs of expr * exprs 
+
+and expr =
     ASTNum of int
   | ASTId of string
   | ASTBool of bool
   | ASTPrim of op * expr * expr
   | ASTAlt of expr * expr * expr
   | ASTApp of expr * exprs
-
-type exprs = 
-    ASTExpr of expr 
-  | ASTExprs of expr * exprs 
